@@ -9,11 +9,23 @@ function init()
 {
     var stage = new createjs.Stage("demoCanvas");
 
-    var circle = new createjs.Shape();
-    circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-    circle.x = 100;
-    circle.y = 100;
-    stage.addChild(circle);
+    var redBeadX = 100;
+    var redBeadY = 100;
+    var redBeadC = 50;
+
+    var circleShadow = new createjs.Shape();
+    circleShadow.graphics.beginFill("#802020").drawCircle(0, 0, redBeadC);
+    circleShadow.x = redBeadX;
+    circleShadow.y = redBeadY;
+
+    var circleLight = new createjs.Shape();
+    circleLight.graphics.beginFill("#A02020").drawCircle(0, 0, 44);
+    circleLight.x = 98;
+    circleLight.y = 96;
+
+    stage.addChild(circleShadow);
+    stage.addChild(circleLight);
+    circleShadow.shadow = new createjs.Shadow("#000000", 5, 5, 10);
 
     stage.update();
 
