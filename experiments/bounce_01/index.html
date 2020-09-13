@@ -30,12 +30,16 @@
 const numberOfBalls = 5;
 const maxIntervals  = 5000;
 
+// add the event listeners
+document.addEventListener('keypress', KeyPressed);
+
 // set up the global variables
 var intervalCounter = maxIntervals;  // the interval counter (set the the maxIntervals from constants.js)
 var canvasContext;                   // the canvas context
 var gameArea;                        // the page's canvas element
 var intervalID;                      // the id of the interval timer that calls the main loop
 var ballArray = [];                  // an array for the ball objects
+var isPaused = false;
 
 Setup();
 
@@ -89,25 +93,28 @@ function Main()
     canvasContext.canvas.width  = window.innerWidth;
     canvasContext.canvas.height = window.innerHeight;
     
-    // move balls
-    for(i = 0; i < ballArray.length; i++)
-    {
-        var oldballArray = Array.from(ballArray[i]);
-        
-        ballArray[i]["xPos"] += ballArray[i]["deltaX"];
-        ballArray[i]["yPos"] += ballArray[i]["deltaY"];
-        WallCollisionCheck(i);
+    //if (!isPaused)
+    //{
+        // move balls
+        for(i = 0; i < ballArray.length; i++)
+        {
+            var oldballArray = Array.from(ballArray[i]);
+            
+            ballArray[i]["xPos"] += ballArray[i]["deltaX"];
+            ballArray[i]["yPos"] += ballArray[i]["deltaY"];
+            WallCollisionCheck(i);
 
-        DrawBall(oldballArray["clr"], oldballArray["rad"], oldballArray["xPos"], oldballArray["yPos"]);
-        DrawBall(ballArray[i]["clr"], ballArray[i]["rad"], ballArray[i]["xPos"], ballArray[i]["yPos"]);
-    }
+            DrawBall(oldballArray["clr"], oldballArray["rad"], oldballArray["xPos"], oldballArray["yPos"]);
+            DrawBall(ballArray[i]["clr"], ballArray[i]["rad"], ballArray[i]["xPos"], ballArray[i]["yPos"]);
+        }
 
-    // TODO: improve the ball collision check so balls don't become smooshed into one another
+        // TODO: improve the ball collision check so balls don't become smooshed into one another
 
-    BallCollisionCheck();
+        BallCollisionCheck();
 
-    intervalCounter -= 1;
-    if (intervalCounter <= 0) clearInterval(intervalID);
+        intervalCounter -= 1;
+        if (intervalCounter <= 0) clearInterval(intervalID);
+    //}
 }
 
 
@@ -207,6 +214,26 @@ function PlayNote(frequency, type, rampDownTime)
     audioOscillator.start(0);
     audioGain.gain.exponentialRampToValueAtTime(0.00001, audioContext.currentTime + rampDownTime);
 }
+
+
+function KeyPressed(e)
+{
+  //log.textContent += ` ${e.code}`;
+   //= (isPaused == true) ? false : true;
+    if (isPaused)
+    {
+        intervalID = setInterval(Main, 10);
+        isPaused = false;
+    }
+    else
+    {
+        intervalID = clearInterval(intervalID);
+        isPaused = true;
+    }
+};
+
+
+
 
 </script>
 
