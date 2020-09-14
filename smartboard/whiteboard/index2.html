@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>White</title>
+        <link rel="stylesheet" href="_assets/drawingboard.min.css">
+        <script src="_assets/jquery.min.js"></script>
+        <script src="_assets/drawingboard.min.js"></script>   
+        <style>
+            #whiteboard
+            { width: 100%;
+              height: 100%;
+              overflow: hidden;
+              margin: 0;
+              padding: 0;
+            }
+            body
+            { overflow: hidden;
+              margin: 10;
+              padding: 25;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="whiteboard"></div>
+        <script>
+            var myBoard = new DrawingBoard.Board
+                              ( 'whiteboard',
+                                { controls: [ 'Color',
+                                              { Size: { type: 'dropdown' } },
+                                              { DrawingMode: { filler: true } },
+                                              'Navigation',
+                                              'Download'
+                                            ],
+                                  size: 1,
+                                  webStorage: 'session',
+                                  enlargeYourContainer: true
+                                }
+                              );
+        </script>      
+    </body>
+</html>
